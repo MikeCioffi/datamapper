@@ -1,103 +1,67 @@
-import React, { useRef } from 'react';
-import axios from 'axios';
-import useFileUpload from 'react-use-file-upload';
+import { useState } from "react";
+import Papa from "papaparse";
 
-const Upload = () => {
-    const {
-        files,
-        fileNames,
-        fileTypes,
-        totalSize,
-        totalSizeInBytes,
-        handleDragDropEvent,
-        clearAllFiles,
-        createFormData,
-        setFiles,
-        removeFile,
-    } = useFileUpload();
+function Upload() {
+    // State to store parsed data
+    const [parsedData, setParsedData] = useState([]);
 
-    const inputRef = useRef();
+    //State to store table Column name
+    const [tableRows, setTableRows] = useState([]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    //State to store the values
+    const [values, setValues] = useState([]);
 
-        const formData = createFormData();
+    const changeHandler = (event) => {
+        // Passing file data (event.target.files[0]) to parse using Papa.parse
+        Papa.parse(event.target.files[0], {
+            header: true,
+            skipEmptyLines: true,
+            complete: function (results) {
+                const rowsArray = [];
+                const valuesArray = [];
 
-        try {
-            axios.post('https://some-api.com', formData, {
-                'content-type': 'multipart/form-data',
-            });
-        } catch (error) {
-            console.error('Failed to submit files.');
-        }
+                // Iterating data to get column name and their values
+                results.data.map((d) => {
+                    rowsArray.push(Object.keys(d));
+                    valuesArray.push(Object.values(d));
+                });
+
+                // Parsed Data Response in array format
+                setParsedData(results.data);
+
+                // Filtered Column Names
+                setTableRows(rowsArray[0]);
+
+
+            },
+        });
     };
 
     return (
         <div>
-            <h1>Upload Files</h1>
+            {/* File Uploader */}
+            <input
+                type="file"
+                name="file"
+                onChange={changeHandler}
+                accept=".csv"
+                style={{ display: "block", margin: "10px auto" }}
+            />
+            <br />
+            <br />
+            {/* Table */}
+            <table className="flex">
+                <thead>
+                    <tr className="flex flex-column">
+                        {tableRows.map((rows, index) => {
+                            return <th key={index}>{rows}</th>;
+                        })}
+                    </tr>
+                </thead>
 
-            <p>Please use the form to your right to upload any file(s) of your choosing.</p>
-
-            <div className="form-container">
-                {/* Display the files to be uploaded */}
-                <div >
-                    <ul>
-                        {fileNames.map((name) => (
-                            <li key={name}>
-                                <span>{name}</span>
-
-                                <span onClick={() => removeFile(name)}>
-                                    <i className="fa fa-times" />
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
-
-                    {files.length > 0 && (
-                        <ul>
-                            <li>File types found: {fileTypes.join(', ')}</li>
-                            <li>Total Size: {totalSize}</li>
-                            <li>Total Bytes: {totalSizeInBytes}</li>
-
-                            <li className="clear-all">
-                                <button onClick={() => clearAllFiles()}>Clear All</button>
-                            </li>
-                        </ul>
-                    )}
-                </div>
-
-                {/* Provide a drop zone and an alternative button inside it to upload files. */}
-                <div
-
-                    onDragEnter={handleDragDropEvent}
-                    onDragOver={handleDragDropEvent}
-                    onDrop={(e) => {
-                        handleDragDropEvent(e);
-                        setFiles(e, 'a');
-                    }}
-                >
-                    <p>Drag and drop files here</p>
-
-                    <button onClick={() => inputRef.current.click()}>Or select files to upload</button>
-
-                    {/* Hide the crappy looking default HTML input */}
-                    <input
-                        ref={inputRef}
-                        type="file"
-                        multiple
-                        style={{ display: 'none' }}
-                        onChange={(e) => {
-                            setFiles(e, 'a');
-                            inputRef.current.value = null;
-                        }}
-                    />
-                </div>
-            </div>
-
-            <div className="submit">
-                <button onClick={handleSubmit}>Submit</button>
-            </div>
+            </table>
         </div>
     );
-};
-export default Upload
+}
+
+export default Upload;
