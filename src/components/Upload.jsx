@@ -32,7 +32,6 @@ function Upload() {
                 // Filtered Column Names
                 setTableRows(rowsArray[0]);
 
-
             },
         });
     };
