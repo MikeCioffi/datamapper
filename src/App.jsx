@@ -10,10 +10,6 @@ function App() {
   return (
     <div className="App">
       <Logo />
-      <h1 className="text-3xl font-bold underline">
-        Welcome to Dora!
-      </h1>
-      <p>(cause we got the map ya bish)</p>
       <Upload />
 
     </div>
