@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Papa from "papaparse";
 import '../App.css'
+import Draggable from 'react-draggable';
+
 
 function Upload() {
     // State to store parsed data
@@ -50,17 +52,22 @@ function Upload() {
             <br />
             <br />
             {/* Table */}
+
             <table className="flex">
                 <thead>
                     <tr className="flex m-5  p-5 flex-col">
                         {tableRows.map((rows, index) => {
-                            return <th className="p-5 bg-purple rounded-md m-5" key={index}>{rows}</th>;
+                            return <div>
+                                <Draggable>
+                                    <th className="p-5 bg-purple rounded-md m-5" key={index}>{rows}</th>
+                                </Draggable>
+                            </div>
                         })}
                     </tr>
                 </thead>
 
             </table>
-        </div>
+        </div >
     );
 }
 
