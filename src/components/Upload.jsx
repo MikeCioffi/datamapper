@@ -1,28 +1,18 @@
 import { useState } from "react";
+import * as React from 'react';
+
+
 import Papa from "papaparse";
 import '../App.css'
-import Draggable from 'react-draggable';
+
 import Dropdown from "./Dropdown";
-import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
+import Results from "./Results";
+// import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
 
-
+import Draggable from "react-draggable";
 
 
 function Upload() {
-
-    const boxStyle = { border: 'grey solid 2px', borderRadius: '10px', padding: '5px' };
-
-    const DraggableBox = ({ id, rows, index }) => {
-        const updateXarrow = useXarrow();
-        return (
-            <Draggable onDrag={updateXarrow} onStop={updateXarrow} >
-                <div id={id} className="p-5 bg-purple rounded-md  cursor-pointer" key={index}>{rows}</div>
-            </Draggable>
-        );
-    };
-
-
-    const [newMapping, setNewMapping] = useState([])
 
     // State to store parsed data
     const [parsedData, setParsedData] = useState([]);
@@ -30,8 +20,23 @@ function Upload() {
     //State to store table Column name
     const [tableRows, setTableRows] = useState([]);
 
+    // State to store the mapping values
+    const [mappingData, setNewMapping] = useState([])
+
     //State to store the values
     const [values, setValues] = useState([]);
+
+
+
+    const nodeRef = React.useRef(null);
+
+    const DraggableBox = ({ id, rows, index }) => {
+        return (
+            <Draggable  >
+                <div ref={nodeRef} id={id} className="p-5 bg-purple rounded-md  cursor-pointer" key={index}>{rows}</div>
+            </Draggable>
+        );
+    };
 
     const changeHandler = (event) => {
         // Passing file data (event.target.files[0]) to parse using Papa.parse
@@ -59,10 +64,9 @@ function Upload() {
     };
 
 
-
-
     return (
         <div>
+
 
             {/* File Uploader */}
             <input
@@ -78,33 +82,40 @@ function Upload() {
             <div className="flex m-5  p-5 flex-col">
                 {tableRows.map((rows, index) => {
 
-                    console.log(rows)
+
                     // uses react-draggable to allow the component to be moved. 
-                    return <Xwrapper >
-                        <div className="flex">
-
-                            <div className='mr-12' id={String(index)}>
-                                <Dropdown />
-                            </div>
-                            <DraggableBox id={rows} rows={rows} index={index} />
+                    return <div className="flex w-full justify-around">
 
 
+                        <DraggableBox id={String(index)} rows={rows} index={index} key={index} />
+                        <div >
+                            <Dropdown id={String(mappingData.findIndex(obj => obj === rows))} Mapping={mappingData} setNewMapping={setNewMapping} index={index} />
                         </div>
-                        <Xarrow end={rows} start={String(index)} />
-
-                    </Xwrapper>
 
 
+                    </div>
+                    // <Xarrow start={String(index)} end={String(mappingData.findIndex(obj => obj === rows))} key={"arrow" + { index }} />
+
+
+
+                    // String(mappingData.findIndex(obj => obj === rows))
 
                 })}
             </div >
-            <div className="flex m-5  p-5 flex-col">
-                {tableRows.map((rows, index) => {
-                    // uses react-draggable to allow the component to be moved. 
-                    return <div>
-                    </div>
-                })}
+            {tableRows.length > 0 ? <div>
+                <button onClick={() => <></>}>Save</button>
+
+                <Results rows={tableRows} mappingData={mappingData} />
             </div>
+
+
+                : <></>}
+
+
+
+
+
+
 
         </div >
     );
