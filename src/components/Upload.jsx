@@ -51,20 +51,25 @@ function Upload() {
             />
             <br />
             <br />
-            {/* Table */}
+
 
             <table className="flex">
-                <thead>
+                <tbody>
                     <tr className="flex m-5  p-5 flex-col">
                         {tableRows.map((rows, index) => {
+                            // uses react-draggable to allow the component to be moved. 
                             return <div>
                                 <Draggable>
-                                    <th className="p-5 bg-purple rounded-md m-5" key={index}>{rows}</th>
+                                    <th className="p-5 bg-purple rounded-md  cursor-pointer" key={index}>{rows}</th>
                                 </Draggable>
+
                             </div>
                         })}
+
                     </tr>
-                </thead>
+
+
+                </tbody>
 
             </table>
         </div >
