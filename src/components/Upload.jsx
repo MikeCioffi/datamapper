@@ -2,9 +2,28 @@ import { useState } from "react";
 import Papa from "papaparse";
 import '../App.css'
 import Draggable from 'react-draggable';
+import Dropdown from "./Dropdown";
+import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
+
+
 
 
 function Upload() {
+
+    const boxStyle = { border: 'grey solid 2px', borderRadius: '10px', padding: '5px' };
+
+    const DraggableBox = ({ id, rows, index }) => {
+        const updateXarrow = useXarrow();
+        return (
+            <Draggable onDrag={updateXarrow} onStop={updateXarrow} >
+                <div id={id} className="p-5 bg-purple rounded-md  cursor-pointer" key={index}>{rows}</div>
+            </Draggable>
+        );
+    };
+
+
+    const [newMapping, setNewMapping] = useState([])
+
     // State to store parsed data
     const [parsedData, setParsedData] = useState([]);
 
@@ -39,8 +58,12 @@ function Upload() {
         });
     };
 
+
+
+
     return (
         <div>
+
             {/* File Uploader */}
             <input
                 type="file"
@@ -52,26 +75,37 @@ function Upload() {
             <br />
             <br />
 
+            <div className="flex m-5  p-5 flex-col">
+                {tableRows.map((rows, index) => {
 
-            <table className="flex">
-                <tbody>
-                    <tr className="flex m-5  p-5 flex-col">
-                        {tableRows.map((rows, index) => {
-                            // uses react-draggable to allow the component to be moved. 
-                            return <div>
-                                <Draggable>
-                                    <th className="p-5 bg-purple rounded-md  cursor-pointer" key={index}>{rows}</th>
-                                </Draggable>
+                    console.log(rows)
+                    // uses react-draggable to allow the component to be moved. 
+                    return <Xwrapper >
+                        <div className="flex">
 
+                            <div className='mr-12' id={String(index)}>
+                                <Dropdown />
                             </div>
-                        })}
-
-                    </tr>
+                            <DraggableBox id={rows} rows={rows} index={index} />
 
 
-                </tbody>
+                        </div>
+                        <Xarrow end={rows} start={String(index)} />
 
-            </table>
+                    </Xwrapper>
+
+
+
+                })}
+            </div >
+            <div className="flex m-5  p-5 flex-col">
+                {tableRows.map((rows, index) => {
+                    // uses react-draggable to allow the component to be moved. 
+                    return <div>
+                    </div>
+                })}
+            </div>
+
         </div >
     );
 }
