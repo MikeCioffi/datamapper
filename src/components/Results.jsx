@@ -18,8 +18,6 @@ function Results(props) {
         setPlaceHolderMapping(newPlaceHolderMapping);
     }, [props.mappingData, props.rows.length]);
 
-    console.log("parsed data in results");
-    console.log(props.parsedData);
 
     return (
         <div className="flex justify-center flex-col">
@@ -56,7 +54,6 @@ function Results(props) {
                         return (
                             <div className="flex w-full justify-between" key={index}>
                                 {data.map((row_data, idx) => {
-                                    console.log(row_data);
                                     return (
                                         <div
                                             className="p-4 bg-purple-500 m-4 text-blue rounded-lg w-1/3"
