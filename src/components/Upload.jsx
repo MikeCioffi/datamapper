@@ -106,7 +106,7 @@ function Upload() {
                 })}
             </div >
             {tableRows.length > 0 ? <div>
-                <button onClick={() => <></>}>Save</button>
+                <button className="p-4 px-14 rounded-lg m-4 bg-green" onClick={() => <></>}>Export</button>
 
                 <Results rows={tableRows} mappingData={mappingData} parsedData={parsedData} />
             </div>
