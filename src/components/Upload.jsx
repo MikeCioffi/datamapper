@@ -5,6 +5,8 @@ import "../App.css";
 import Dropdown from "./Dropdown";
 import Results from "./Results";
 import Draggable from "react-draggable";
+import Export from './Export';
+
 
 function Upload() {
     const [parsedData, setParsedData] = useState([]);
@@ -86,9 +88,8 @@ function Upload() {
                             ))}
                         </div>
                         <div className="flex justify-end mt-4">
-                            <button className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md mr-4">
-                                Export
-                            </button>
+                            <Export rows={tableRows} mappingData={mappingData} parsedData={parsedData} />
+
                         </div>
                         <Results rows={tableRows} mappingData={mappingData} parsedData={parsedData} />
                     </div>
