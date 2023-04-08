@@ -54,15 +54,18 @@ function Upload() {
                 });
 
                 // Parsed Data Response in array format
-                setParsedData(results.data);
+                setParsedData(valuesArray);
 
                 // Filtered Column Names
                 setTableRows(rowsArray[0]);
+
+                console.log(valuesArray)
 
             },
         });
     };
 
+    console.log(parsedData)
 
     return (
         <div>
@@ -105,7 +108,7 @@ function Upload() {
             {tableRows.length > 0 ? <div>
                 <button onClick={() => <></>}>Save</button>
 
-                <Results rows={tableRows} mappingData={mappingData} />
+                <Results rows={tableRows} mappingData={mappingData} parsedData={parsedData} />
             </div>
 
 
