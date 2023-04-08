@@ -1,45 +1,34 @@
 import { useState } from "react";
-import * as React from 'react';
-
-
+import * as React from "react";
 import Papa from "papaparse";
-import '../App.css'
-
+import "../App.css";
 import Dropdown from "./Dropdown";
 import Results from "./Results";
-// import Xarrow, { useXarrow, Xwrapper } from 'react-xarrows';
-
 import Draggable from "react-draggable";
 
-
 function Upload() {
-
-    // State to store parsed data
     const [parsedData, setParsedData] = useState([]);
-
-    //State to store table Column name
     const [tableRows, setTableRows] = useState([]);
-
-    // State to store the mapping values
-    const [mappingData, setNewMapping] = useState([])
-
-    //State to store the values
+    const [mappingData, setNewMapping] = useState([]);
     const [values, setValues] = useState([]);
-
-
-
     const nodeRef = React.useRef(null);
 
     const DraggableBox = ({ id, rows, index }) => {
         return (
-            <Draggable  >
-                <div ref={nodeRef} id={id} className="p-5 bg-purple rounded-md  cursor-pointer" key={index}>{rows}</div>
+            <Draggable>
+                <div
+                    ref={nodeRef}
+                    id={id}
+                    className="p-5 bg-purple text-white rounded-md cursor-pointer shadow-md"
+                    key={index}
+                >
+                    {rows}
+                </div>
             </Draggable>
         );
     };
 
     const changeHandler = (event) => {
-        // Passing file data (event.target.files[0]) to parse using Papa.parse
         Papa.parse(event.target.files[0], {
             header: true,
             skipEmptyLines: true,
@@ -47,80 +36,65 @@ function Upload() {
                 const rowsArray = [];
                 const valuesArray = [];
 
-                // Iterating data to get column name and their values
                 results.data.map((d) => {
                     rowsArray.push(Object.keys(d));
                     valuesArray.push(Object.values(d));
                 });
 
-                // Parsed Data Response in array format
                 setParsedData(valuesArray);
-
-                // Filtered Column Names
                 setTableRows(rowsArray[0]);
-
-                console.log(valuesArray)
-
             },
         });
     };
 
-    console.log(parsedData)
-
     return (
-        <div>
+        <div className="flex flex-col items-center justify-center">
+            <div className="w-full">
+                <div className="flex flex-col justify-center align-middle rounded-lg shadow-md p-6 mb-6 text-center">
+                    <label htmlFor="file-upload" className="relative cursor-pointer">
+                        <span className="bg-white rounded-md shadow-sm py-2 px-3 border border-gray-300">
+                            Upload a file
+                        </span>
+                        <input
+                            id="file-upload"
+                            name="file-upload"
+                            type="file"
+                            accept=".csv"
+                            onChange={changeHandler}
+                            className="sr-only"
+                        />
+                    </label>
 
-
-            {/* File Uploader */}
-            <input
-                type="file"
-                name="file"
-                onChange={changeHandler}
-                accept=".csv"
-                style={{ display: "block", margin: "10px auto" }}
-            />
-            <br />
-            <br />
-
-            <div className="flex m-5  p-5 flex-col">
-                {tableRows.map((rows, index) => {
-
-
-                    // uses react-draggable to allow the component to be moved. 
-                    return <div className="flex w-full justify-around">
-
-
-                        <DraggableBox id={String(index)} rows={rows} index={index} key={index} />
-                        <div >
-                            <Dropdown id={String(mappingData.findIndex(obj => obj === rows))} Mapping={mappingData} setNewMapping={setNewMapping} index={index} />
+                </div>
+                {tableRows.length > 0 && (
+                    <div className="rounded-lg shadow-md p-6">
+                        <div className="flex flex-wrap justify-between -mx-4">
+                            {tableRows.map((rows, index) => (
+                                <div className="w-full sm:w-1/2 lg:w-1/3 px-4 mb-4" key={index}>
+                                    <div className="bg-purple text-white rounded-md p-4 shadow-md">
+                                        <DraggableBox id={String(index)} rows={rows} index={index} />
+                                    </div>
+                                    <div className="mt-2">
+                                        <Dropdown
+                                            id={String(mappingData.findIndex((obj) => obj === rows))}
+                                            Mapping={mappingData}
+                                            setNewMapping={setNewMapping}
+                                            index={index}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-
-
+                        <div className="flex justify-end mt-4">
+                            <button className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md mr-4">
+                                Export
+                            </button>
+                        </div>
+                        <Results rows={tableRows} mappingData={mappingData} parsedData={parsedData} />
                     </div>
-                    // <Xarrow start={String(index)} end={String(mappingData.findIndex(obj => obj === rows))} key={"arrow" + { index }} />
-
-
-
-                    // String(mappingData.findIndex(obj => obj === rows))
-
-                })}
-            </div >
-            {tableRows.length > 0 ? <div>
-                <button className="p-4 px-14 rounded-lg m-4 bg-green" onClick={() => <></>}>Export</button>
-                {/* test change 2 */}
-                <Results rows={tableRows} mappingData={mappingData} parsedData={parsedData} />
+                )}
             </div>
-
-
-                : <></>}
-
-
-
-
-
-
-
-        </div >
+        </div>
     );
 }
 
