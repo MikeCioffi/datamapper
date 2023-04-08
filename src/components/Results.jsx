@@ -6,34 +6,38 @@ function Results(props) {
     console.log(props.parsedData)
 
     return <div className="flex justify-center flex-col">
-        <div className="flex justify-center" >
-            <h2>OLD</h2>
-            {props.rows.map((data, index) => {
-                return < div className="w-4/12" key={index} >
-                    {data}
-                </div >
-            })
-            }
+        <div className="flex justify-between" >
+            <div className="w-2/12">OLD</div>
+            <div className=" m-2 flex w-10/12 justify-around">
+                {props.rows.map((data, index) => {
+                    return < div className=" p-4 bg-purple rounded-lg w-1/4" key={index} >
+                        {data}
+                    </div >
+                })
+                }
+            </div>
         </div>
 
-        <div className="flex justify-center" >
-            <div>NEW</div>
-            {props.mappingData.map((data, index) => {
-                return < div className="w-4/12" key={index} >
+        <div className="flex justify-between" >
+            <div className="w-2/12">NEW</div>
+            <div className=" flex m-2 w-10/12 justify-around">
+                {props.mappingData.map((data, index) => {
+                    return < div className=" p-4 bg-blue rounded-lg w-1/4" key={index} >
 
-                    {data}
-                </div >
-            })
-            }
+                        {data}
+                    </div >
+                })
+                }
+            </div>
         </div>
 
-        <div className="flex justify-around" >
-            <h2>DATA</h2>
-            <div className="flex w-full flex-col">
+        <div className="flex justify-between" >
+            <div className="w-2/12">DATA</div>
+            <div className="flex w-10/12 flex-col">
                 {props.parsedData.map((data, index) => {
-                    return <div className="flex w-full"> {data.map((row_data) => {
+                    return <div className="flex w-full justify-around"> {data.map((row_data) => {
                         console.log(row_data)
-                        return < div className='w-4/12' key={index} >
+                        return < div className='p-2 bg-purple-500 m-2 text-blue rounded-lg w-1/4' key={index} >
                             {row_data}
 
                         </div >
