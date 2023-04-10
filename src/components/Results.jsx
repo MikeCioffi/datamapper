@@ -5,7 +5,9 @@ function Results(props) {
 
     // Create a new array with the same length as mappingData
     useEffect(() => {
-        const newPlaceHolderMapping = new Array(props.rows.length).fill("Please enter a new header");
+        const newPlaceHolderMapping = new Array(props.rows.length).fill(
+            "Please enter a new header"
+        );
 
         // Iterate through mappingData and update the corresponding entry in newPlaceHolderMapping
         props.mappingData.forEach((header, index) => {
@@ -18,29 +20,28 @@ function Results(props) {
         setPlaceHolderMapping(newPlaceHolderMapping);
     }, [props.mappingData, props.rows.length]);
 
-
     return (
-        <div className="flex justify-center flex-col">
-            <div className="flex justify-between">
-                <div className="w-2/12 bold text-purple-600 flex justify-center">OLD</div>
-                <div className="flex w-10/12">
+        <div className="flex flex-col">
+            <div className="flex mb-1">
+                <div className="w-1/12 font-bold text-center text-purple-400">OLD</div>
+                <div className="w-11/12 flex justify-between">
                     {props.rows.map((data, index) => {
                         return (
-                            <div className="p-4 bg-purple-600 m-4 rounded-lg w-1/3" key={index}>
-                                {data}
+                            <div className="w-4/12 break-words flex-wrap p-2 m-1 bg-purple-400 rounded-sm" key={index}>
+                                <span className="break-words">{data}</span>
                             </div>
                         );
                     })}
                 </div>
             </div>
 
-            <div className="flex justify-between">
-                <div className="w-2/12">NEW</div>
-                <div className="flex w-10/12">
+            <div className="flex mb-1">
+                <div className="w-1/12 text-blue-300 flex justify-center align-middle font-bold text-center">NEW</div>
+                <div className="w-11/12 flex justify-between">
                     {placeHolderMapping.map((data, index) => {
                         return (
-                            <div className="p-4 bg-blue-500 m-4 rounded-lg w-1/3" key={index}>
-                                {data}
+                            <div className="w-4/12 break-words flex-wrap p-2 m-1 bg-blue-300 rounded-sm" key={index}>
+                                <span className="break-words">{data}</span>
                             </div>
                         );
                     })}
@@ -48,18 +49,15 @@ function Results(props) {
             </div>
 
             <div className="flex justify-between">
-                <div className="w-2/12">DATA</div>
-                <div className="flex w-10/12 flex-col">
+                <div className="w-1/12 font-bold text-center">DATA</div>
+                <div className="w-11/12 flex flex-col">
                     {props.parsedData.map((data, index) => {
                         return (
-                            <div className="flex w-full justify-between" key={index}>
+                            <div className="flex justify-between" key={index}>
                                 {data.map((row_data, idx) => {
                                     return (
-                                        <div
-                                            className="p-4 bg-purple-500 m-4 text-blue rounded-lg w-1/3"
-                                            key={idx}
-                                        >
-                                            {row_data}
+                                        <div className=" p-2 m-1 bg-blue-50 text-blue-800 rounded-sm   " key={idx}>
+                                            <span className="break-words">{row_data}</span>
                                         </div>
                                     );
                                 })}

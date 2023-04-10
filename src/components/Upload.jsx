@@ -21,7 +21,7 @@ function Upload() {
                 <div
                     ref={nodeRef}
                     id={id}
-                    className="p-5 bg-purple text-white rounded-md cursor-pointer shadow-md"
+                    className=" bg-purple-500 text-white rounded-md cursor-pointer shadow-md"
                     key={index}
                 >
                     {rows}
@@ -54,7 +54,7 @@ function Upload() {
             <div className="w-full">
                 <div className="flex flex-col justify-center align-middle rounded-lg shadow-md p-6 mb-6 text-center">
                     <label htmlFor="file-upload" className="relative cursor-pointer">
-                        <span className="bg-white rounded-md shadow-sm py-2 px-3 border border-gray-300">
+                        <span className=" rounded-md shadow-sm py-2 px-3 border border-gray-300">
                             Upload a file
                         </span>
                         <input
@@ -73,10 +73,10 @@ function Upload() {
                         <div className="flex flex-wrap justify-between -mx-4">
                             {tableRows.map((rows, index) => (
                                 <div className="w-full sm:w-1/2 lg:w-1/3 px-4 mb-4" key={index}>
-                                    <div className="bg-purple text-white rounded-md p-4 shadow-md">
+                                    <div className=" rounded-md shadow-md">
                                         <DraggableBox id={String(index)} rows={rows} index={index} />
                                     </div>
-                                    <div className="mt-2">
+                                    <div className="">
                                         <Dropdown
                                             id={String(mappingData.findIndex((obj) => obj === rows))}
                                             Mapping={mappingData}
@@ -95,7 +95,7 @@ function Upload() {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 }
 
