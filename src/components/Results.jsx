@@ -56,7 +56,7 @@ function Results(props) {
                             <div className="flex justify-between" key={index}>
                                 {data.map((row_data, idx) => {
                                     return (
-                                        <div className=" p-2 m-1 bg-blue-50 text-blue-800 rounded-sm   " key={idx}>
+                                        <div className="w-4/12 p-2 m-1 bg-blue-50 text-blue-800 rounded-sm   " key={idx}>
                                             <span className="break-words">{row_data}</span>
                                         </div>
                                     );
