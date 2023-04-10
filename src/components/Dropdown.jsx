@@ -26,7 +26,7 @@ function Dropdown(props) {
                 id={props.id}
                 value={selectedValue}
                 onChange={handleChange}
-                className="block w-full py-2 pl-3 pr-10 mt-1 text-base leading-6 border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+                className="block text-black w-full py-2 pl-3 pr-10 mt-1 text-base leading-6 border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
             >
                 <option value="">Select a header</option>
                 <option value="header1">Header 1</option>
