@@ -69,7 +69,7 @@ function Upload() {
 
             </div>
             {tableRows.length > 0 && (
-                <div className="rounded-lg shadow-md w-full">
+                <div className="rounded-lg shadow-md">
                     <div className="flex flex-wrap justify-between -mx-4">
                         {tableRows.map((rows, index) => (
                             <div className="w-full sm:w-1/2 lg:w-1/3 px-4 mb-4" key={index}>
@@ -87,10 +87,11 @@ function Upload() {
                             </div>
                         ))}
                     </div>
-                    <div className="flex justify-end mt-4">
+                    <div className="flex justify-end m-4">
                         <Export rows={tableRows} mappingData={mappingData} parsedData={parsedData} />
 
                     </div>
+
                     <Results rows={tableRows} mappingData={mappingData} parsedData={parsedData} />
                 </div>
             )}

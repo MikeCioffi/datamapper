@@ -14,7 +14,7 @@ function Dropdown(props) {
 
     const handleClear = () => {
         setSelectedValue("");
-        newMapping[props.index] = "Please enter a new header";
+        newMapping[props.index] = "Enter a new header";
         props.setNewMapping(newMapping);
     };
 
