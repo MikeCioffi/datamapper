@@ -5,7 +5,8 @@ import "../App.css";
 import Dropdown from "./Dropdown";
 import Results from "./Results";
 import Draggable from "react-draggable";
-import Export from './Export';
+import Export from './Buttons/Export';
+import Save from './Buttons/Save';
 
 
 function Upload() {
@@ -88,6 +89,8 @@ function Upload() {
                         ))}
                     </div>
                     <div className="flex justify-end m-4">
+                        <Save oldHeaders={tableRows} newHeaders={mappingData} />
+
                         <Export rows={tableRows} mappingData={mappingData} parsedData={parsedData} />
 
                     </div>

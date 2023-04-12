@@ -1,43 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 function Dropdown(props) {
-
     const newMapping = [...props.Mapping];
 
     const [selectedValue, setSelectedValue] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
+    const inputRef = useRef(null);
 
-    const handleChange = (event) => {
+    const handleInputChange = (event) => {
         newMapping[props.index] = event.target.value;
         setSelectedValue(event.target.value);
         props.setNewMapping(newMapping);
     };
 
     const handleClear = () => {
+        console.log("attempting to clear")
         setSelectedValue("");
-        newMapping[props.index] = "Enter a new header";
+        newMapping[props.index] = "";
         props.setNewMapping(newMapping);
+        inputRef.current.focus();
     };
 
 
+    console.log("selected value")
+    console.log(selectedValue)
+    const handleFocus = () => {
+        setIsEditing(true);
+    };
+
+    const handleBlur = () => {
+        setIsEditing(false);
+    };
 
     return (
         <div className="relative">
-            <select
+            {!isEditing && (
+                <div
+                    className="absolute inset-0 z-10"
+                    onClick={() => {
+                        setIsEditing(true);
+                        inputRef.current.focus();
+                    }}
+                />
+            )}
+            <input
+                ref={inputRef}
                 id={props.id}
                 value={selectedValue}
-                onChange={handleChange}
+                placeholder="Enter a header"
+                onChange={handleInputChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 className="block text-white w-full py-2 pl-3 pr-10 mt-1 text-base leading-6 border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
-            >
-                <option value="">Select a header</option>
-                <option value="header1">Header 1</option>
-                <option value="header2">Header 2</option>
-                <option value="header3">Header 3</option>
-            </select>
+
+            />
             {selectedValue && (
                 <div className="absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg
-                        onClick={handleClear}
-                        className="w-4 h-4 cursor-pointer fill-current hover:text-gray-500 transition duration-300 ease-in-out"
+                        onClick={() => handleClear()}
+                        className="w-4 h-4 z-10  text-white cursor-pointer fill-current hover:text-gray-500 transition duration-300 ease-in-out"
                         viewBox="0 0 20 20"
                     >
                         <path

@@ -34,7 +34,7 @@ export default function Auth() {
             />
           </div>
           <div>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" disabled={loading}>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" disabled={loading}>
               {loading ? <span>Loading</span> : <span>Send magic link</span>}
             </button>
           </div>
