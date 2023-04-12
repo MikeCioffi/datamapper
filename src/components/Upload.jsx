@@ -4,7 +4,6 @@ import Papa from "papaparse";
 import "../App.css";
 import Dropdown from "./Dropdown";
 import Results from "./Results";
-import Draggable from "react-draggable";
 import Export from './Buttons/Export';
 import Save from './Buttons/Save';
 
@@ -13,23 +12,8 @@ function Upload() {
     const [parsedData, setParsedData] = useState([]);
     const [tableRows, setTableRows] = useState([]);
     const [mappingData, setNewMapping] = useState([]);
-    const [values, setValues] = useState([]);
-    const nodeRef = React.useRef(null);
 
-    const DraggableBox = ({ id, rows, index }) => {
-        return (
-            <Draggable>
-                <div
-                    ref={nodeRef}
-                    id={id}
-                    className=" bg-purple-500 text-white rounded-md cursor-pointer shadow-md"
-                    key={index}
-                >
-                    {rows}
-                </div>
-            </Draggable>
-        );
-    };
+
 
     const changeHandler = (event) => {
         Papa.parse(event.target.files[0], {
@@ -71,11 +55,18 @@ function Upload() {
             </div>
             {tableRows.length > 0 && (
                 <div className="rounded-lg shadow-md">
-                    <div className="flex flex-wrap justify-between -mx-4">
+                    <div className="flex  flex-col flex-wrap justify-between -mx-4">
                         {tableRows.map((rows, index) => (
-                            <div className="w-full sm:w-1/2 lg:w-1/3 px-4 mb-4" key={index}>
-                                <div className=" rounded-md shadow-md">
-                                    <DraggableBox id={String(index)} rows={rows} index={index} />
+                            <div className="flex p-4" key={index}>
+                                <div className=" w-1/2 rounded-md shadow-md">
+                                    <div
+
+
+                                        className="p-2 bg-purple-500 text-white rounded-md cursor-pointer shadow-md"
+
+                                    >
+                                        {rows}
+                                    </div>
                                 </div>
                                 <div className="">
                                     <Dropdown
