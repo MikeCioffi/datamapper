@@ -24,6 +24,11 @@ module.exports = {
         violet: colors.violet,
         fuchsia: colors.fuchsia,
         rose: colors.rose,
+        gray: {
+          300: '#484848',
+          400: '#2D2D2D',
+          500: '#242424'
+        },
         purple: {
           50: '#f7f2ff',
           100: '#e5dbff',

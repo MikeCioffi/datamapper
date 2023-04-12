@@ -51,7 +51,7 @@ function Dropdown(props) {
                 onChange={handleInputChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                className="block text-white w-full py-2 pl-3 pr-10 mt-1 text-base leading-6 border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
+                className="block placeholder-white text-white w-full py-2 pl-3 pr-10 mt-1 text-base leading-6 border-gray-300 rounded-md appearance-none focus:outline-none focus:shadow-outline-blue focus:border-blue-300 sm:text-sm sm:leading-5"
 
             />
             {selectedValue && (

@@ -6,14 +6,16 @@ import Dropdown from "./Dropdown";
 import Results from "./Results";
 import Export from './Buttons/Export';
 import Save from './Buttons/Save';
+import MappingSelect from './Buttons/HandleSelect';
+
+
 
 
 function Upload() {
     const [parsedData, setParsedData] = useState([]);
     const [tableRows, setTableRows] = useState([]);
     const [mappingData, setNewMapping] = useState([]);
-
-
+    const [savedMappings, setSavedMappings] = useState([])
 
     const changeHandler = (event) => {
         Papa.parse(event.target.files[0], {
@@ -37,9 +39,9 @@ function Upload() {
     return (
         <div className="flex flex-col items-center justify-center w-full">
 
-            <div className="flex flex-col justify-center align-middle rounded-lg shadow-md p-6 mb-6 text-center">
-                <label htmlFor="file-upload" className="relative cursor-pointer">
-                    <span className=" rounded-md shadow-sm py-2 px-3 border border-gray-300">
+            <div className="flex flex-col justify-center align-middle rounded-lg p-6 mb-6 text-center">
+                <label htmlFor="file-upload" className="rounded-sm hover:bg-gray-400 shadow-lg py-2 px-3 border border-gray-300 relative cursor-pointer">
+                    <span className="">
                         Upload a file
                     </span>
                     <input
@@ -59,16 +61,11 @@ function Upload() {
                         {tableRows.map((rows, index) => (
                             <div className="flex p-4" key={index}>
                                 <div className=" w-1/2 rounded-md shadow-md">
-                                    <div
-
-
-                                        className="p-2 bg-purple-500 text-white rounded-md cursor-pointer shadow-md"
-
-                                    >
+                                    <div className="p-2 mr-2 bg-purple-500 text-white rounded-md cursor-pointer shadow-md"                                    >
                                         {rows}
                                     </div>
                                 </div>
-                                <div className="">
+                                <div className="w-1/2 text-center">
                                     <Dropdown
                                         id={String(mappingData.findIndex((obj) => obj === rows))}
                                         Mapping={mappingData}
@@ -80,10 +77,9 @@ function Upload() {
                         ))}
                     </div>
                     <div className="flex justify-end m-4">
-                        <Save oldHeaders={tableRows} newHeaders={mappingData} />
-
+                        <Save oldHeaders={tableRows} newHeaders={mappingData} setSavedMappings={setSavedMappings} savedMappings={savedMappings} />
+                        <MappingSelect mappings={savedMappings} onSelect={console.log("selected")} />
                         <Export rows={tableRows} mappingData={mappingData} parsedData={parsedData} />
-
                     </div>
 
                     <Results rows={tableRows} mappingData={mappingData} parsedData={parsedData} />

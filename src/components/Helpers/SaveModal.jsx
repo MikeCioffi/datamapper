@@ -8,21 +8,24 @@ function SaveModal(props) {
 
 
 
+
+
     const closeModal = () => {
         setIsOpen(false);
         setMappingTitle("");
     };
 
+
+
     const handleSubmit = () => {
-        const mapping = {
+        const mapping = [...props.savedMappings, {
             old: props.oldHeaders,
             new: props.newHeaders,
             title: mappingTitle,
-        };
+        }];
 
         // Store the mapping data in local storage or a database here
-        console.log(mapping);
-
+        props.setSavedMappings(mapping)
         closeModal();
     };
 
